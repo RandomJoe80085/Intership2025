@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://du66al455omax"]
+
+[ext_resource type="Texture2D" uid="uid://dsj4i4shvk6bf" path="res://assets/brackeys_platformer_assets/sprites/Sword.png" id="1_ol5xe"]
+[ext_resource type="Script" path="res://scripts/sword.gd" id="1_qff12"]
+
+[node name="Sword" type="Node2D"]
+rotation = 1.5708
+script = ExtResource("1_qff12")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(13, -5.68248e-07)
+rotation = 1.5708
+texture = ExtResource("1_ol5xe")

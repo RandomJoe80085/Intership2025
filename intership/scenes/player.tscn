@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bauaowry3j1g8"]
+[gd_scene load_steps=10 format=3 uid="uid://bauaowry3j1g8"]
 
 [ext_resource type="Texture2D" uid="uid://cdgyedgro6fsg" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="1_24reu"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_q78wj"]
+[ext_resource type="PackedScene" uid="uid://du66al455omax" path="res://scenes/sword.tscn" id="3_tq22t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_virxx"]
 size = Vector2(10, 16)
@@ -55,3 +56,21 @@ sprite_frames = SubResource("SpriteFrames_tcqbb")
 animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.902247
+
+[node name="Sword" parent="." instance=ExtResource("3_tq22t")]
+position = Vector2(1, 5)
+rotation = 1.21126
+
+[node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="DashDuration" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
