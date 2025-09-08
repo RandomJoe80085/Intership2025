@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://xcad21lnm3cd"]
+
+[ext_resource type="Script" path="res://scripts/enemies/turret.gd" id="1_71j7t"]
+[ext_resource type="PackedScene" uid="uid://c0brojovdorl7" path="res://scenes/components/health_component.tscn" id="2_5gipl"]
+[ext_resource type="Texture2D" uid="uid://bso8wyevuxvvh" path="res://assets/brackeys_platformer_assets/sprites/TurretCannon.png" id="2_b6iqf"]
+[ext_resource type="Texture2D" uid="uid://cpweolb10xbaw" path="res://assets/brackeys_platformer_assets/sprites/TurretBase.png" id="2_c4tko"]
+[ext_resource type="PackedScene" uid="uid://cafn7iyplhjx" path="res://scenes/attacks/health_bar.tscn" id="2_jbt4n"]
+[ext_resource type="PackedScene" uid="uid://dkwfd236pp24f" path="res://scenes/components/hitbox_component.tscn" id="3_i0vyq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nkki"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwnqc"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w06w"]
+size = Vector2(20, 9)
+
+[node name="Turret" type="Node2D"]
+script = ExtResource("1_71j7t")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_jbt4n")]
+offset_left = -13.0
+offset_top = -16.0
+offset_right = 15.0
+offset_bottom = -11.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3nkki")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xwnqc")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("parent", "healthbar") instance=ExtResource("2_5gipl")]
+MAX_HEALTH = 20
+parent = NodePath("..")
+healthbar = NodePath("../HealthBar")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_i0vyq")]
+collision_layer = 4
+collision_mask = 11
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_3w06w")
+
+[node name="LockArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LockArea"]
+polygon = PackedVector2Array(0, 0, 147, 45, 261, 81, 232, 124, 202, 152, 138, 178, 51, 193, -27, 191, -111, 186, -190, 137, -234, 85, -127, 43)
+
+[node name="TurretCannon" type="Sprite2D" parent="LockArea"]
+position = Vector2(1, -3)
+texture = ExtResource("2_b6iqf")
+
+[node name="Marker2D" type="Marker2D" parent="LockArea/TurretCannon"]
+position = Vector2(12, 1)
+
+[node name="TurretBase" type="Sprite2D" parent="LockArea"]
+texture = ExtResource("2_c4tko")
+
+[connection signal="body_entered" from="LockArea" to="." method="_on_lock_area_body_entered"]
+[connection signal="body_exited" from="LockArea" to="." method="_on_lock_area_body_exited"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpvs0d8jb0hss"]
+
+[ext_resource type="Script" path="res://scripts/enemies/dummy.gd" id="1_v5e8c"]
+[ext_resource type="PackedScene" uid="uid://dkwfd236pp24f" path="res://scenes/components/hitbox_component.tscn" id="2_ou7sd"]
+[ext_resource type="PackedScene" uid="uid://c0brojovdorl7" path="res://scenes/components/health_component.tscn" id="3_e7jwg"]
+[ext_resource type="Texture2D" uid="uid://dsj4i4shvk6bf" path="res://assets/brackeys_platformer_assets/sprites/Sword.png" id="4_uxusu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dy0sw"]
+radius = 15.1327
+
+[node name="Dummy" type="Node2D"]
+script = ExtResource("1_v5e8c")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_ou7sd")]
+collision_layer = 4
+collision_mask = 2
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_dy0sw")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_e7jwg")]
+position = Vector2(5.86517, 15.6413)
+MAX_HEALTH = 300
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_uxusu")

@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://bed3n5snxqha5"]
+
+[ext_resource type="Script" path="res://scripts/attacks/explosion.gd" id="1_ud5og"]
+[ext_resource type="Texture2D" uid="uid://bbbbmb7k33kik" path="res://assets/ExplosionEffects/Effect_Explosion2/30fps/Spritesheets/Effect_Explosion2_1_355x355.png" id="2_lrhb1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_58uj8"]
+radius = 25.318
+
+[sub_resource type="Animation" id="Animation_b518g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_r6tf3"]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667, 0.8, 0.833333, 0.866667, 0.9, 0.933333, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 29, 25]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6ix5l"]
+_data = {
+"RESET": SubResource("Animation_b518g"),
+"explosion": SubResource("Animation_r6tf3")
+}
+
+[node name="Explosion" type="Area2D"]
+collision_layer = 32
+collision_mask = 5
+script = ExtResource("1_ud5og")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_58uj8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_lrhb1")
+hframes = 6
+vframes = 5
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6ix5l")
+}
+autoplay = "explosion"
+speed_scale = 2.0

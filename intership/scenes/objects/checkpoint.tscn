@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3cx48lrjabq0"]
+
+[ext_resource type="Script" path="res://scripts/objects/checkpoint.gd" id="1_76ua5"]
+[ext_resource type="Texture2D" uid="uid://3p7oveh4o625" path="res://assets/brackeys_platformer_assets/sprites/CheckpointPost.png" id="2_icw3j"]
+[ext_resource type="Texture2D" uid="uid://ddxn8w7ef21yf" path="res://assets/brackeys_platformer_assets/sprites/ChackpointFlagWhite.png" id="3_3fqh2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3shq0"]
+size = Vector2(19, 34)
+
+[node name="Checkpoint" type="Node2D"]
+script = ExtResource("1_76ua5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_icw3j")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(7, -11)
+texture = ExtResource("3_3fqh2")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4.5, -1)
+shape = SubResource("RectangleShape2D_3shq0")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bxrw5rd68fosp"]
+
+[ext_resource type="FontFile" uid="uid://rim1d5sdo52r" path="res://assets/brackeys_platformer_assets/fonts/PixelOperator8.ttf" id="1_cijrt"]
+
+[resource]
+font = ExtResource("1_cijrt")
+font_size = 8
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)

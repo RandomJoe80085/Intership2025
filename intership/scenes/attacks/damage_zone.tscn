@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d114gu6idngr4"]
+
+[ext_resource type="Script" path="res://scripts/attacks/damage_zone.gd" id="1_ol8fe"]
+
+[node name="DamageZone" type="Area2D"]
+collision_layer = 32
+script = ExtResource("1_ol8fe")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

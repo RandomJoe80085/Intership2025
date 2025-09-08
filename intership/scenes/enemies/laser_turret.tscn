@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://mrjetr5x2r3o"]
+
+[ext_resource type="Texture2D" uid="uid://sl36db7edysn" path="res://assets/brackeys_platformer_assets/sprites/LaserNozzle.png" id="1_axeke"]
+[ext_resource type="Texture2D" uid="uid://cpweolb10xbaw" path="res://assets/brackeys_platformer_assets/sprites/TurretBase.png" id="2_gfqgw"]
+[ext_resource type="PackedScene" uid="uid://c48upl18dcemk" path="res://scenes/attacks/laser.tscn" id="3_3obu2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcttx"]
+size = Vector2(18, 14)
+
+[node name="LaserTurret" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(2, 0)
+rotation = -1.5708
+texture = ExtResource("1_axeke")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("2_gfqgw")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 8)
+
+[node name="Laser" parent="." instance=ExtResource("3_3obu2")]
+position = Vector2(15, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_hcttx")

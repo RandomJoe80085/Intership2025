@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxeqmj15l2ea6"]
+
+[ext_resource type="Script" path="res://scripts/attacks/bullet.gd" id="1_8durr"]
+[ext_resource type="Texture2D" uid="uid://1qojeea2tc5x" path="res://assets/brackeys_platformer_assets/sprites/Bullet.png" id="2_nir43"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2dal"]
+radius = 5.09902
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qawsx"]
+atlas = ExtResource("2_nir43")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23j2s"]
+atlas = ExtResource("2_nir43")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lncug"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qawsx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23j2s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 32
+collision_mask = 11
+script = ExtResource("1_8durr")
+metadata/_edit_vertical_guides_ = [-48.0]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e2dal")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_lncug")
+autoplay = "default"
+frame_progress = 0.198671
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

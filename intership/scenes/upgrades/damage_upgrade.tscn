@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://c1cmjepjtr6mt"]
+
+[ext_resource type="Script" path="res://scripts/upgrades/damage_upgrade.gd" id="1_8xlwj"]
+[ext_resource type="Script" path="res://scripts/upgrades/upgrade_strategy/damage_upgrade_strategy.gd" id="2_a62tn"]
+[ext_resource type="Texture2D" uid="uid://d3s4vdmi6qju4" path="res://assets/brackeys_platformer_assets/sprites/MonsterRed-removebg-preview.png" id="3_kyakn"]
+
+[sub_resource type="Resource" id="Resource_n1cbf"]
+script = ExtResource("2_a62tn")
+damage_increase = 5
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cjmq5"]
+lifetime_randomness = 0.7
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s833i"]
+radius = 6.0
+height = 26.0
+
+[node name="DamageUpgrade" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_8xlwj")
+upgrade_strategy = SubResource("Resource_n1cbf")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_cjmq5")
+lifetime = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_s833i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, -4.76837e-07)
+scale = Vector2(0.0459051, 0.0459051)
+texture = ExtResource("3_kyakn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
