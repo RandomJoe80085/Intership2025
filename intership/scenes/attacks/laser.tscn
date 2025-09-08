@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://c48upl18dcemk"]
+
+[ext_resource type="Script" path="res://scripts/attacks/laser.gd" id="1_hjtrn"]
+[ext_resource type="Texture2D" uid="uid://ck4g108o3cmv7" path="res://assets/brackeys_platformer_assets/sprites/LaserTexture.png" id="2_txd8k"]
+
+[sub_resource type="Gradient" id="Gradient_7phhq"]
+colors = PackedColorArray(1, 0.141176, 0, 1, 0.823529, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_amble"]
+gradient = SubResource("Gradient_7phhq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rlhrf"]
+particle_flag_disable_z = true
+spread = 80.0
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_amble")
+
+[sub_resource type="Gradient" id="Gradient_qguf4"]
+colors = PackedColorArray(1, 0.141176, 0, 1, 0.294118, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gylaq"]
+gradient = SubResource("Gradient_qguf4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gdgqh"]
+particle_flag_disable_z = true
+spread = 80.0
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_gylaq")
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("1_hjtrn")
+is_casting = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 8
+
+[node name="Line2D" type="Line2D" parent="RayCast2D"]
+points = PackedVector2Array(0, 0, 100, 0)
+texture = ExtResource("2_txd8k")
+texture_mode = 2
+begin_cap_mode = 2
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(100, 0)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-5, 0)
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_rlhrf")
+lifetime = 0.5
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(100, 0)
+rotation = 3.14159
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_gdgqh")
+lifetime = 0.5

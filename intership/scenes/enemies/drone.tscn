@@ -1,0 +1,108 @@
+[gd_scene load_steps=15 format=3 uid="uid://b2dgkmd4kileo"]
+
+[ext_resource type="Script" path="res://scripts/enemies/drone.gd" id="1_xj036"]
+[ext_resource type="PackedScene" uid="uid://c0brojovdorl7" path="res://scenes/components/health_component.tscn" id="1_y3ifa"]
+[ext_resource type="PackedScene" uid="uid://vy6674gtv2uj" path="res://scenes/components/knockback_component.tscn" id="2_4yo40"]
+[ext_resource type="Texture2D" uid="uid://don5bfgsoh8e7" path="res://assets/brackeys_platformer_assets/sprites/New Piskel (5).png" id="2_rtve3"]
+[ext_resource type="PackedScene" uid="uid://dkwfd236pp24f" path="res://scenes/components/hitbox_component.tscn" id="3_i8fnt"]
+[ext_resource type="PackedScene" uid="uid://cafn7iyplhjx" path="res://scenes/attacks/health_bar.tscn" id="6_6qji7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7y2n"]
+atlas = ExtResource("2_rtve3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvcky"]
+atlas = ExtResource("2_rtve3")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ss37n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7y2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvcky")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pf2br"]
+radius = 4.0
+height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ab8x2"]
+radius = 107.117
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tqyws"]
+radius = 4.0
+height = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhpg0"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7o1n"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="Drone" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_xj036")
+
+[node name="KnockbackComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("2_4yo40")]
+parent = NodePath("..")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("parent", "sprite", "healthbar") instance=ExtResource("1_y3ifa")]
+MAX_HEALTH = 10000
+parent = NodePath("..")
+sprite = NodePath("../AnimatedSprite2D")
+healthbar = NodePath("../HealthBar")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ss37n")
+autoplay = "default"
+frame_progress = 0.45368
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_i8fnt")]
+collision_layer = 4
+collision_mask = 11
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_pf2br")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_ab8x2")
+
+[node name="DroneCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tqyws")
+
+[node name="HealthBar" parent="." instance=ExtResource("6_6qji7")]
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 12.0
+offset_bottom = -9.0
+theme_override_styles/background = SubResource("StyleBoxFlat_nhpg0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n7o1n")
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr4bjjud2ldfk"]
+
+[ext_resource type="Script" path="res://scripts/enemies/death_particles.gd" id="1_xaxsg"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_odevs"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 15.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+
+[node name="DeathParticles" type="GPUParticles2D"]
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_odevs")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.75
+script = ExtResource("1_xaxsg")

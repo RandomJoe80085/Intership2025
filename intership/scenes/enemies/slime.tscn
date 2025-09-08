@@ -1,0 +1,204 @@
+[gd_scene load_steps=24 format=3 uid="uid://digpblyu8k7a1"]
+
+[ext_resource type="Script" path="res://scripts/enemies/slime.gd" id="1_7ehbx"]
+[ext_resource type="PackedScene" uid="uid://vy6674gtv2uj" path="res://scenes/components/knockback_component.tscn" id="2_cmpfp"]
+[ext_resource type="Texture2D" uid="uid://dpphu5lpst320" path="res://assets/brackeys_platformer_assets/sprites/slime_green.png" id="2_k3j8s"]
+[ext_resource type="PackedScene" uid="uid://c0brojovdorl7" path="res://scenes/components/health_component.tscn" id="3_lytp5"]
+[ext_resource type="PackedScene" uid="uid://dkwfd236pp24f" path="res://scenes/components/hitbox_component.tscn" id="4_d27oo"]
+[ext_resource type="PackedScene" uid="uid://cafn7iyplhjx" path="res://scenes/attacks/health_bar.tscn" id="6_vsalw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq4ut"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbqb7"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg5ck"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0471"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guyda"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48ty4"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u65qe"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3y24"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rd46"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2q4t"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onyq7"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5df0"]
+atlas = ExtResource("2_k3j8s")
+region = Rect2(72, 48, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ytchi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq4ut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbqb7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg5ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0471")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guyda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48ty4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u65qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3y24")
+}],
+"loop": true,
+"name": &"death",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rd46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2q4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onyq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5df0")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3oqt"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsjyh"]
+size = Vector2(213.5, 78)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3x0t6"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqs81"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="Slime" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_7ehbx")
+
+[node name="KnockbackComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("2_cmpfp")]
+parent = NodePath("..")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_ytchi")
+animation = &"attack"
+frame_progress = 0.183736
+
+[node name="RayCastLeftDown" type="RayCast2D" parent="."]
+position = Vector2(0, -7)
+target_position = Vector2(-7, 8)
+collision_mask = 8
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -2)
+target_position = Vector2(-9, 0)
+collision_mask = 8
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, -2)
+target_position = Vector2(9, 0)
+collision_mask = 8
+
+[node name="RayCastRightDown" type="RayCast2D" parent="."]
+position = Vector2(0, -7)
+target_position = Vector2(7, 8)
+collision_mask = 8
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("parent", "sprite", "healthbar") instance=ExtResource("3_lytp5")]
+MAX_HEALTH = 20
+parent = NodePath("..")
+sprite = NodePath("../AnimatedSprite2D")
+healthbar = NodePath("../HealthBar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_d3oqt")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_d27oo")]
+collision_layer = 4
+collision_mask = 11
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_d3oqt")
+
+[node name="Detection" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+position = Vector2(0, -39)
+shape = SubResource("RectangleShape2D_lsjyh")
+
+[node name="HealthBar" parent="." instance=ExtResource("6_vsalw")]
+offset_left = -9.0
+offset_top = -19.0
+offset_right = 8.0
+offset_bottom = -15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3x0t6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wqs81")
+
+[connection signal="has_died" from="HealthComponent" to="." method="_on_health_component_has_died"]
+[connection signal="body_entered" from="Detection" to="." method="_on_detection_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_detection_body_exited"]
